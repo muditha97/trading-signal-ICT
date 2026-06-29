@@ -13,7 +13,11 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],      # allows any origin — fine for local dev
+    allow_origins=[
+        "http://localhost:8000",
+        "http://127.0.0.1:5500",
+        "https://trading-signal-ict.vercel.app",
+    ],
     allow_methods=["*"],
     allow_credentials=True,
     allow_headers=["*"],
