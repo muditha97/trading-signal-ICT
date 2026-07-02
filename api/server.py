@@ -101,7 +101,7 @@ def get_signal(instrument: str):
 
     try:
         # Step 1: fetch live candles (from Step 3)
-        candles = fetch_candles(clean_instrument, granularity="1h", count=50)
+        candles = fetch_candles(clean_instrument, granularity="3min", count=200)
 
         # Step 2: run ICT signal logic (Step 4)
         signal  = generate_signal(clean_instrument, candles)
@@ -124,7 +124,7 @@ def debug(instrument: str):
     clean = instrument_map.get(instrument.upper())
 
     try:
-        candles = fetch_candles(clean, granularity="1h", count=50)
+        candles = fetch_candles(clean, granularity="3min", count=200)
         candle_count = len(candles)
         last_candle  = candles[-1] if candles else None
     except Exception as e:

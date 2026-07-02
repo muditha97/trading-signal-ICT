@@ -21,67 +21,120 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; padding: 24px 16px; }
-    .page { max-width: 960px; margin: 0 auto; }
-    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .page { max-width: 1000px; margin: 0 auto; }
+
+    /* ── Header ── */
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
     .header-left h1 { font-family: var(--mono); font-size: 18px; font-weight: 600; letter-spacing: 0.05em; }
-    .header-left p { font-size: 12px; color: var(--muted); margin-top: 4px; font-family: var(--mono); }
-    .btn-refresh { background: var(--accent); color: white; border: none; padding: 8px 18px; border-radius: 6px; font-family: var(--sans); font-size: 13px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
+    .header-left p { font-size: 11px; color: var(--muted); margin-top: 4px; font-family: var(--mono); }
+    .btn-refresh { background: var(--accent); color: white; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
     .btn-refresh:hover { opacity: 0.85; }
     .btn-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
-    .kz-banner { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 8px; margin-bottom: 24px; font-family: var(--mono); font-size: 13px; font-weight: 500; }
+
+    /* ── Kill zone banner ── */
+    .kz-banner { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 8px; margin-bottom: 20px; font-family: var(--mono); font-size: 13px; font-weight: 500; }
     .kz-banner.active   { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: var(--long); }
-    .kz-banner.inactive { background: rgba(107,114,128,0.1); border: 1px solid var(--border); color: var(--muted); }
+    .kz-banner.inactive { background: rgba(107,114,128,0.08); border: 1px solid var(--border); color: var(--muted); }
     .kz-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .active  .kz-dot { background: var(--long);  box-shadow: 0 0 6px var(--long); }
+    .active  .kz-dot { background: var(--long); box-shadow: 0 0 6px var(--long); animation: pulse 2s infinite; }
     .inactive .kz-dot { background: var(--muted); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* ── Grid ── */
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+
+    /* ── Card ── */
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; position: relative; overflow: hidden; }
-    .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+    .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; border-radius: 3px 0 0 3px; }
     .card.sig-LONG::before  { background: var(--long); }
     .card.sig-SHORT::before { background: var(--short); }
     .card.sig-WAIT::before  { background: var(--wait); }
     .card.sig-loading::before { background: var(--border); }
-    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+
+    /* ── Card header ── */
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
     .instrument-name { font-family: var(--mono); font-size: 15px; font-weight: 600; }
-    .live-price { font-family: var(--mono); font-size: 13px; color: var(--muted); margin-top: 3px; }
+    .live-price { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 3px; }
     .signal-badge { font-family: var(--mono); font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 4px; letter-spacing: 0.08em; }
-    .badge-LONG    { background: rgba(16,185,129,0.15);  color: var(--long); }
-    .badge-SHORT   { background: rgba(239,68,68,0.15);   color: var(--short); }
-    .badge-WAIT    { background: rgba(245,158,11,0.15);  color: var(--wait); }
-    .badge-loading { background: var(--border); color: var(--muted); }
-    .confidence { font-family: var(--mono); font-size: 11px; padding: 2px 8px; border-radius: 20px; margin-top: 6px; display: inline-block; }
-    .conf-HIGH   { background: rgba(16,185,129,0.1); color: var(--long); }
-    .conf-MEDIUM { background: rgba(59,130,246,0.1); color: var(--accent); }
-    .conf-LOW    { background: rgba(245,158,11,0.1); color: var(--wait); }
-    .conf-WAIT   { background: var(--border); color: var(--muted); }
-    .reason { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; min-height: 40px; }
-    .conditions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-    .condition { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: var(--bg); border-radius: 6px; border: 1px solid var(--border); }
-    .cond-icon { font-size: 13px; flex-shrink: 0; }
-    .cond-label { font-size: 11px; color: var(--muted); font-family: var(--mono); }
-    .cond-value { font-size: 11px; font-weight: 500; font-family: var(--mono); }
-    .cond-ok  { color: var(--long); }
-    .cond-no  { color: var(--short); }
-    .levels-title { font-size: 11px; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-    .levels { display: flex; flex-direction: column; gap: 6px; }
-    .level-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: var(--bg); border-radius: 5px; }
+    .badge-LONG  { background: rgba(16,185,129,0.15); color: var(--long); }
+    .badge-SHORT { background: rgba(239,68,68,0.15);  color: var(--short); }
+    .badge-WAIT  { background: rgba(245,158,11,0.15); color: var(--wait); }
+
+    /* ── State pill ── */
+    .state-pill { font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 20px; margin-top: 5px; display: inline-block; background: var(--border); color: var(--muted); letter-spacing: 0.04em; }
+
+    /* ── Midnight open bar ── */
+    .midnight-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: var(--bg); border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px; }
+    .midnight-label { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+    .midnight-values { display: flex; gap: 16px; }
+    .midnight-item { text-align: right; }
+    .midnight-item span { font-family: var(--mono); font-size: 12px; font-weight: 500; }
+    .midnight-item small { font-family: var(--mono); font-size: 10px; color: var(--muted); display: block; }
+    .bias-bull { color: var(--long); }
+    .bias-bear { color: var(--short); }
+
+    /* ── Reason ── */
+    .reason { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; min-height: 36px; }
+
+    /* ── Rule checklist ── */
+    .rules-title { font-size: 10px; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+    .rules { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .rule-row { display: flex; align-items: flex-start; gap: 8px; padding: 7px 10px; background: var(--bg); border-radius: 6px; border: 1px solid var(--border); }
+    .rule-icon { font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+    .rule-name { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+    .rule-detail { font-family: var(--mono); font-size: 11px; font-weight: 500; margin-top: 1px; }
+    .rule-ok   { color: var(--long); }
+    .rule-no   { color: var(--short); }
+    .rule-mid  { color: var(--wait); }
+
+    /* ── Confidence bar ── */
+    .conf-section { margin-bottom: 14px; }
+    .conf-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .conf-label { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+    .conf-score { font-family: var(--mono); font-size: 11px; font-weight: 600; }
+    .conf-HIGH   { color: var(--long); }
+    .conf-MEDIUM { color: var(--accent); }
+    .conf-LOW    { color: var(--wait); }
+    .conf-bar-bg { height: 4px; background: var(--border); border-radius: 2px; }
+    .conf-bar-fill { height: 4px; border-radius: 2px; transition: width 0.5s ease; }
+    .fill-HIGH   { background: var(--long); }
+    .fill-MEDIUM { background: var(--accent); }
+    .fill-LOW    { background: var(--wait); }
+
+    /* ── Trade levels ── */
+    .levels-title { font-size: 10px; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+    .levels { display: flex; flex-direction: column; gap: 5px; }
+    .level-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; background: var(--bg); border-radius: 5px; }
     .level-label { font-size: 11px; color: var(--muted); font-family: var(--mono); }
-    .level-value { font-family: var(--mono); font-size: 13px; font-weight: 500; }
+    .level-value { font-family: var(--mono); font-size: 13px; font-weight: 600; }
     .level-entry { color: var(--accent); }
     .level-sl    { color: var(--short); }
     .level-tp    { color: var(--long); }
-    .level-pips  { color: var(--muted); font-size: 11px; }
+    .level-pips  { color: var(--muted); font-size: 10px; margin-left: 4px; font-weight: 400; }
     .no-trade { font-family: var(--mono); font-size: 11px; color: var(--muted); padding: 10px; text-align: center; background: var(--bg); border-radius: 6px; }
+
+    /* ── Footer ── */
     .footer { text-align: center; font-size: 11px; color: var(--muted); font-family: var(--mono); padding-top: 16px; border-top: 1px solid var(--border); }
+
+    /* ── Skeleton ── */
     .skeleton { background: linear-gradient(90deg, var(--border) 25%, var(--surface) 50%, var(--border) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; height: 14px; margin: 6px 0; }
-    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    /* ── Error ── */
     .error-msg { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; padding: 10px 14px; border-radius: 6px; font-size: 12px; font-family: var(--mono); margin-top: 8px; }
+
+    /* ── Alert toast ── */
+    .toast { position: fixed; top: 20px; right: 20px; padding: 12px 20px; border-radius: 8px; font-family: var(--mono); font-size: 13px; font-weight: 600; z-index: 999; animation: slideIn 0.3s ease; display: none; }
+    .toast.long  { background: rgba(16,185,129,0.95);  color: white; }
+    .toast.short { background: rgba(239,68,68,0.95);   color: white; }
+    @keyframes slideIn { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
   </style>
 </head>
 <body>
 <div class="page">
 
+  <!-- Header -->
   <div class="header">
     <div class="header-left">
       <h1>ICT SIGNAL DASHBOARD</h1>
@@ -90,135 +143,312 @@
     <button class="btn-refresh" id="btn-refresh" onclick="loadAll()">↻ Refresh</button>
   </div>
 
+  <!-- Kill Zone Banner -->
   <div class="kz-banner inactive" id="kz-banner">
     <div class="kz-dot"></div>
     <span id="kz-text">Checking kill zone status...</span>
   </div>
 
+  <!-- Signal Cards -->
   <div class="grid">
     <div id="card-GBPUSD" class="card sig-loading">
       <div class="skeleton"></div>
       <div class="skeleton" style="width:60%"></div>
-      <div class="skeleton" style="width:80%; margin-top:12px"></div>
+      <div class="skeleton" style="width:80%;margin-top:12px"></div>
     </div>
     <div id="card-XAUUSD" class="card sig-loading">
       <div class="skeleton"></div>
       <div class="skeleton" style="width:60%"></div>
-      <div class="skeleton" style="width:80%; margin-top:12px"></div>
+      <div class="skeleton" style="width:80%;margin-top:12px"></div>
     </div>
   </div>
 
   <div class="footer">
-    Not financial advice. ICT signals are for educational purposes only. Always manage your own risk.
+    3-Min London Kill Zone Strategy · Not financial advice · Always manage your own risk
   </div>
-
 </div>
+
+<!-- Alert toast for new signals -->
+<div class="toast" id="toast"></div>
+
 <script>
-  const API = 'https://trading-signal-ict.onrender.com';
-  const INSTRUMENTS = ['GBPUSD', 'XAUUSD'];
-  const DISPLAY_NAMES = { 'GBPUSD': 'GBP / USD', 'XAUUSD': 'XAU / USD (Gold)' };
+  const API          = 'https://trading-signal-ict.onrender.com'
+  const INSTRUMENTS  = ['GBPUSD', 'XAUUSD']
+  const NAMES        = { GBPUSD: 'GBP / USD', XAUUSD: 'XAU / USD (Gold)' }
 
+  // Track previous signals to detect changes and trigger alerts
+  const prevSignals  = { GBPUSD: null, XAUUSD: null }
+
+  // ── State label map — human readable ──────────────────────────────────────
+  const STATE_LABELS = {
+    'waiting_for_killzone':     'Waiting for Kill Zone',
+    'waiting_for_choch':        'Watching for CHoCH',
+    'waiting_for_confirmation': 'Waiting 2nd Body Close',
+    'waiting_for_fvg':          'Waiting for FVG',
+    'signal_ready':             'Setup Complete',
+    'invalid':                  'Setup Invalid',
+  }
+
+
+  // ── Load everything ────────────────────────────────────────────────────────
   async function loadAll() {
-    const btn = document.getElementById('btn-refresh');
-    btn.disabled = true;
-    btn.textContent = 'Loading...';
+    const btn = document.getElementById('btn-refresh')
+    btn.disabled = true
+    btn.textContent = 'Loading...'
+
     try {
-      const health = await fetchJSON('/health');
-      updateKillZoneBanner(health);
-      await Promise.all(INSTRUMENTS.map(inst => loadSignal(inst)));
-      document.getElementById('last-updated').textContent = 'Last updated: ' + new Date().toLocaleTimeString();
+      const health = await fetchJSON('/health')
+      updateKillZoneBanner(health)
+      await Promise.all(INSTRUMENTS.map(inst => loadSignal(inst)))
+      secondsLeft = REFRESH_INTERVAL / 1000
+      document.getElementById('last-updated').textContent =
+        'Last updated: ' + new Date().toLocaleTimeString() + '  ·  Next refresh in ' + secondsLeft + 's'
     } catch (err) {
-      console.error('Failed to load:', err);
+      console.error('Load error:', err)
     }
-    btn.disabled = false;
-    btn.textContent = '↻ Refresh';
+
+    btn.disabled = false
+    btn.textContent = '↻ Refresh'
   }
 
+
+  // ── Load one instrument signal ─────────────────────────────────────────────
   async function loadSignal(instrument) {
-    const cardEl = document.getElementById('card-' + instrument);
+    const cardEl = document.getElementById('card-' + instrument)
     try {
-      const data = await fetchJSON('/signal/' + instrument);
-      cardEl.className = 'card sig-' + data.signal;
-      cardEl.innerHTML = buildCard(instrument, data);
+      const data = await fetchJSON('/signal/' + instrument)
+
+      // Detect signal change → play alert
+      if (prevSignals[instrument] !== null &&
+          prevSignals[instrument] === 'WAIT' &&
+          (data.signal === 'LONG' || data.signal === 'SHORT')) {
+        playAlert(instrument, data.signal)
+      }
+      prevSignals[instrument] = data.signal
+
+      cardEl.className = 'card sig-' + data.signal
+      cardEl.innerHTML = buildCard(instrument, data)
+
     } catch (err) {
-      cardEl.className = 'card sig-WAIT';
+      cardEl.className = 'card sig-WAIT'
       cardEl.innerHTML = `
-        <div class="instrument-name">${DISPLAY_NAMES[instrument]}</div>
-        <div class="error-msg">Could not load signal: ${err.message}</div>`;
+        <div class="instrument-name">${NAMES[instrument]}</div>
+        <div class="error-msg">Could not load: ${err.message}</div>`
     }
   }
 
-  function buildCard(instrument, d) {
-    const sig    = d.signal;
-    const struct = d.structure;
-    const fvg    = d.fvg;
-    const sweep  = d.sweep;
-    const kz     = d.kill_zone;
-    const levels = d.trade_levels;
-    const hasLevels = levels && levels.entry;
 
-    const conditions = [
-      { label: 'Kill Zone',  ok: kz.in_kill_zone,       value: kz.in_kill_zone ? kz.session : `NY ${kz.ny_hour}:00` },
-      { label: 'Structure',  ok: struct.bias !== 'Ranging', value: struct.bias },
-      { label: 'FVG',        ok: fvg.found,              value: fvg.found  ? `${fvg.fvg_low}–${fvg.fvg_high}` : 'None' },
-      { label: 'Sweep',      ok: sweep.swept,            value: sweep.swept ? sweep.swept_level : 'None' },
-    ];
+  // ── Build card HTML ────────────────────────────────────────────────────────
+  function buildCard(instrument, d) {
+    const sig    = d.signal
+    const kz     = d.kill_zone     || {}
+    const choch  = d.choch         || {}
+    const sweep  = d.sweep         || {}
+    const fvg    = d.fvg           || {}
+    const dc     = d.double_confirm|| {}
+    const mf     = d.midnight_filter || {}
+    const levels = d.trade_levels  || {}
+    const conf   = d.confidence    || {}   // { label, score, max_score, percentage, conditions }
+    const state  = STATE_LABELS[d.state] || d.state || ''
+    const hasLevels = levels.entry
+
+    // Current price — from fvg or midnight_filter or fallback
+    const currentPrice = mf.current_price || fvg.fvg_mid || '—'
+
+    // Midnight open bias color
+    const biasColor = mf.midnight_bias === 'Bullish' ? 'bias-bull' :
+                      mf.midnight_bias === 'Bearish' ? 'bias-bear' : ''
+
+    // Confidence bar
+    const confLabel = conf.label || 'LOW'
+    const confPct   = conf.percentage || 0
+    const confScore = conf.score !== undefined ? `${conf.score}/${conf.max_score}` : '—'
+
+    // Rule checklist from confidence conditions
+    const conditions = conf.conditions || []
 
     return `
+      <!-- Card Header -->
       <div class="card-header">
         <div>
-          <div class="instrument-name">${DISPLAY_NAMES[instrument]}</div>
-          <div class="live-price">Current: ${struct.current_price}</div>
+          <div class="instrument-name">${NAMES[instrument]}</div>
+          <div class="live-price">Price: ${currentPrice}</div>
         </div>
         <div style="text-align:right">
           <div class="signal-badge badge-${sig}">${sig}</div>
-          <div class="confidence conf-${d.confidence}">${d.confidence}</div>
+          <div class="state-pill">${state}</div>
         </div>
       </div>
+
+      <!-- Midnight Open Reference -->
+      ${d.midnight_open ? `
+      <div class="midnight-bar">
+        <span class="midnight-label">Midnight Open (NY 00:00)</span>
+        <div class="midnight-values">
+          <div class="midnight-item">
+            <span>${d.midnight_open}</span>
+            <small>open</small>
+          </div>
+          <div class="midnight-item">
+            <span class="${biasColor}">${mf.midnight_bias || '—'}</span>
+            <small>bias</small>
+          </div>
+        </div>
+      </div>` : ''}
+
+      <!-- Plain English Reason -->
       <div class="reason">${d.reason}</div>
-      <div class="conditions">
+
+      <!-- Confidence Bar -->
+      <div class="conf-section">
+        <div class="conf-header">
+          <span class="conf-label">Setup Confidence</span>
+          <span class="conf-score conf-${confLabel}">${confLabel} · ${confScore}</span>
+        </div>
+        <div class="conf-bar-bg">
+          <div class="conf-bar-fill fill-${confLabel}" style="width:${confPct}%"></div>
+        </div>
+      </div>
+
+      <!-- Rule Checklist — shows every rule and its status -->
+      <div class="rules-title">Rule Checklist</div>
+      <div class="rules">
         ${conditions.map(c => `
-          <div class="condition">
-            <span class="cond-icon">${c.ok ? '✓' : '✗'}</span>
-            <div>
-              <div class="cond-label">${c.label}</div>
-              <div class="cond-value ${c.ok ? 'cond-ok' : 'cond-no'}">${c.value}</div>
+          <div class="rule-row">
+            <span class="rule-icon">${c.passes ? '✓' : '✗'}</span>
+            <div style="flex:1;min-width:0">
+              <div class="rule-name">${c.rule}</div>
+              <div class="rule-detail ${c.passes ? 'rule-ok' : 'rule-no'}"
+                   style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"
+                   title="${c.detail}">
+                ${c.detail}
+              </div>
             </div>
           </div>`).join('')}
       </div>
+
+      <!-- Trade Levels (only when signal is LONG or SHORT) -->
       ${hasLevels ? `
-        <div class="levels-title">Trade Levels</div>
+        <div class="levels-title">Trade Levels — Enter at FVG 50%</div>
         <div class="levels">
-          <div class="level-row"><span class="level-label">Entry</span><span class="level-value level-entry">${levels.entry}</span></div>
-          <div class="level-row"><span class="level-label">Stop Loss</span><span class="level-value level-sl">${levels.stop_loss} <span class="level-pips">${levels.risk_pips} pips</span></span></div>
-          <div class="level-row"><span class="level-label">Take Profit</span><span class="level-value level-tp">${levels.take_profit} <span class="level-pips">${levels.reward_pips} pips</span></span></div>
-          <div class="level-row"><span class="level-label">R:R Ratio</span><span class="level-value" style="color:var(--accent)">${levels.rr_ratio}</span></div>
-        </div>` : `<div class="no-trade">No trade levels — waiting for setup</div>`}
-      <div style="margin-top:12px; font-size:10px; color:var(--muted); font-family:var(--mono)">Analysed: ${d.analysed_at}</div>`;
+          <div class="level-row">
+            <span class="level-label">Entry (FVG Mid)</span>
+            <span class="level-value level-entry">${levels.entry}</span>
+          </div>
+          <div class="level-row">
+            <span class="level-label">Stop Loss</span>
+            <span class="level-value level-sl">
+              ${levels.stop_loss}
+              <span class="level-pips">${levels.risk_pips} pips</span>
+            </span>
+          </div>
+          <div class="level-row">
+            <span class="level-label">Take Profit</span>
+            <span class="level-value level-tp">
+              ${levels.take_profit}
+              <span class="level-pips">${levels.reward_pips} pips</span>
+            </span>
+          </div>
+          <div class="level-row">
+            <span class="level-label">R:R Ratio</span>
+            <span class="level-value" style="color:var(--accent)">${levels.rr_ratio}</span>
+          </div>
+        </div>
+      ` : `<div class="no-trade">No trade levels yet — setup incomplete</div>`}
+
+      <!-- Timestamp -->
+      <div style="margin-top:12px;font-size:10px;color:var(--muted);font-family:var(--mono)">
+        Analysed: ${d.analysed_at}
+      </div>`
   }
 
+
+  // ── Kill Zone Banner ───────────────────────────────────────────────────────
   function updateKillZoneBanner(health) {
-    const banner = document.getElementById('kz-banner');
-    const text   = document.getElementById('kz-text');
+    const banner = document.getElementById('kz-banner')
+    const text   = document.getElementById('kz-text')
     if (health.in_kill_zone) {
-      banner.className = 'kz-banner active';
-      text.textContent = `${health.active_session}  ·  NY time ${health.ny_hour}:00  ·  Trading window OPEN`;
+      banner.className = 'kz-banner active'
+      text.textContent = `${health.active_session}  ·  NY ${health.ny_hour}:00  ·  London Kill Zone OPEN — watching for CHoCH`
     } else {
-      banner.className = 'kz-banner inactive';
-      text.textContent = `${health.active_session}  ·  NY time ${health.ny_hour}:00  ·  Next: London 02:00 / NY 07:00`;
+      banner.className = 'kz-banner inactive'
+      text.textContent = `No Kill Zone  ·  NY ${health.ny_hour}:00  ·  London opens 02:00 NY (07:30 IST)`
     }
   }
 
+
+  // ── Sound + visual alert when WAIT → LONG/SHORT ───────────────────────────
+  function playAlert(instrument, signal) {
+    // Play a beep using Web Audio API (no external files needed)
+    try {
+      const ctx  = new (window.AudioContext || window.webkitAudioContext)()
+      const osc  = ctx.createOscillator()
+      const gain = ctx.createGain()
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+      osc.frequency.value = signal === 'LONG' ? 880 : 440  // high = long, low = short
+      gain.gain.setValueAtTime(0.3, ctx.currentTime)
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8)
+      osc.start(ctx.currentTime)
+      osc.stop(ctx.currentTime + 0.8)
+    } catch(e) {}
+
+    // Show toast notification
+    const toast = document.getElementById('toast')
+    toast.className = `toast ${signal.toLowerCase()}`
+    toast.textContent = `🔔 ${instrument} ${signal} SIGNAL`
+    toast.style.display = 'block'
+    setTimeout(() => { toast.style.display = 'none' }, 5000)
+
+    // Browser notification (if permission granted)
+    if (Notification.permission === 'granted') {
+      new Notification(`ICT Signal — ${signal}`, {
+        body: `${instrument} ${signal} setup confirmed`,
+        icon: '📈'
+      })
+    }
+  }
+
+
+  // ── Request notification permission on load ────────────────────────────────
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission()
+  }
+
+
+  // ── Fetch helper ───────────────────────────────────────────────────────────
   async function fetchJSON(path) {
-    const res = await fetch(API + path);
+    const res = await fetch(API + path)
     if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.detail || `HTTP ${res.status}`);
+      const err = await res.json().catch(() => ({}))
+      throw new Error(err.detail || `HTTP ${res.status}`)
     }
-    return res.json();
+    return res.json()
   }
 
-  loadAll();
+
+  // ── Auto refresh every 3 minutes (= one 3-min candle) ─────────────────────
+  const REFRESH_INTERVAL = 180000  // 3 minutes
+  let secondsLeft = REFRESH_INTERVAL / 1000
+
+  function updateCountdown() {
+    const mins = Math.floor(secondsLeft / 60)
+    const secs = secondsLeft % 60
+    const display = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`
+    const lastUpdatedEl = document.getElementById('last-updated')
+    if (lastUpdatedEl.textContent.includes('Last updated')) {
+      lastUpdatedEl.textContent = lastUpdatedEl.textContent.replace(/Next refresh in .+/, `Next refresh in ${display}`)
+    }
+    secondsLeft--
+    if (secondsLeft < 0) {
+      secondsLeft = REFRESH_INTERVAL / 1000
+      loadAll()
+    }
+  }
+
+  // Start
+  loadAll()
+  setInterval(updateCountdown, 1000)
 </script>
 </body>
 </html>
